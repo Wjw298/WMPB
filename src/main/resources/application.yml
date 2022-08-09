@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Li123456
+    url: jdbc:mysql://120.25.165.180:3306/fruitery?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+
+server:
+  port: 8090
+
+mybatis:
+  mapper-locations: mapper/*Mapper.xml
+  type-aliases-package: cn.edu.guet.weapp.bean
+
+token:
+  privateKey: '永远选择去中正确的事，不是没做会不会后悔，是做了不后悔就可以了'
+  yangToken: 100000
+  oldToken: 300000

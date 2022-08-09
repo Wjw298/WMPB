@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.guet.weapp.mapper.SysCustomerMapper">
+    <insert id="customerInsert">
+        insert into sys_customer (`id`, `openId`, `name`, `image`, `salt`)
+        VALUES (#{id}, #{openId}, #{name}, #{image}, #{salt})
+    </insert>
+
+    <select id="CustomerSelectByOpenId" resultType="cn.edu.guet.weapp.bean.SysCustomer">
+        SELECT * FROM sys_customer WHERE openId=#{value}
+    </select>
+</mapper>
