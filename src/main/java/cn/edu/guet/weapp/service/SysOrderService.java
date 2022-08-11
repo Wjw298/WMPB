@@ -10,5 +10,5 @@ import java.util.List;
  * @Version 1.0
  */
 public interface SysOrderService {
-    List<SysOrder> findOrder ();
+    List<SysOrder> findOrder (String openId);
 }

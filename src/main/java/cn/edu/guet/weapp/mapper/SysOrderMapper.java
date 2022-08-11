@@ -12,5 +12,5 @@ import java.util.List;
  */
 @Mapper
 public interface SysOrderMapper {
-    List<SysOrder> finaOrder();
+    List<SysOrder> finaOrder(String openId);
 }

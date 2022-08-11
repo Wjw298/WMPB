@@ -37,18 +37,18 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
-        log.info("=======进入拦截器========");
+        //log.info("=======进入拦截器========");
         // 如果不是映射到方法直接通过,可以访问资源.
         if (!(object instanceof HandlerMethod)) {
             return true;
         }
         //为空就返回错误
         String token = httpServletRequest.getHeader("token");
-        log.info(token);
+        //log.info(token);
         if (null == token || "".equals(token.trim())) {
             return false;
         }
-        log.info("==============token:" + token);
+        //log.info("==============token:" + token);
         Map<String, String> map = tokenUtil.parseToken(token);
         String openId = map.get("openId");
         System.out.println("token open openId: "+openId);
@@ -57,7 +57,7 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
         //1.判断 token 是否过期
         //年轻 token
         if (timeOfUse < yangToken) {
-            log.info("年轻 token");
+            //log.info("年轻 token");
         }
         //老年 token 就刷新 token
         else if (timeOfUse >= yangToken && timeOfUse < oldToken) {
@@ -69,10 +69,10 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
         }
         //2.角色匹配.
         if(controller.verifyToken(openId)){
-            log.info("========user账户============");
+            //log.info("========user账户============");
             return true;
         }else{
-            log.info("========不是user账户============");
+            //log.info("========不是user账户============");
         }
         return false;
     }

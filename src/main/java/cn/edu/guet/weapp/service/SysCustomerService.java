@@ -10,4 +10,5 @@ import cn.edu.guet.weapp.bean.SysCustomer;
 public interface SysCustomerService {
     SysCustomer CustomerSelectByOpenId(String openId);
     int customerInset(SysCustomer sysCustomer);
+    int customerUpdateState(String openId,int state);
 }

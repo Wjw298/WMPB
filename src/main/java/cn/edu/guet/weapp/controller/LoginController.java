@@ -38,18 +38,32 @@ public class LoginController {
             HttpResult httpResult =HttpResult.ok(token);
             return httpResult;
         }
-        String username=customer.getName();
-        String image = customer.getImage();
-
-        HttpResult httpResult = HttpResult.ok(username,image,token);
+        customer.setOpenId("");
+        HttpResult httpResult = HttpResult.ok(customer,token);
         return httpResult;
 
     }
 
     @PostMapping("/enroll")
     public int enroll(@RequestBody String  body) throws IOException {
+        int flag;
         SysCustomer customer = GetUser.getUser(body);
-        int flag = sysCustomerService.customerInset(customer);
+        String openId=customer.getOpenId();
+        SysCustomer customer1 = sysCustomerService.CustomerSelectByOpenId(openId) ;
+        if(customer1==null){
+            customer.setState(1);
+            flag = sysCustomerService.customerInset(customer);
+        }else{
+            flag = sysCustomerService.customerUpdateState(openId,1);
+        }
+        return flag;
+    }
+
+    @PostMapping("exit")
+    public int exit(@RequestBody String code) throws IOException {
+        code = code.substring(code.indexOf(":")+2,code.lastIndexOf('"'));//将code转为可用形式
+        String openId = GetOpenId.getOpenId(code);//拿到openId
+        int flag =sysCustomerService.customerUpdateState(openId,0);
         return flag;
     }
 }

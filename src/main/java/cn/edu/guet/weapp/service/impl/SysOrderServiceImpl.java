@@ -18,8 +18,8 @@ public class SysOrderServiceImpl implements SysOrderService {
     @Autowired
     private SysOrderMapper sysOrderMapper;
     @Override
-    public List<SysOrder> findOrder() {
-        List<SysOrder> sysOrderList = sysOrderMapper.finaOrder();
+    public List<SysOrder> findOrder(String openId) {
+        List<SysOrder> sysOrderList = sysOrderMapper.finaOrder(openId);
         return sysOrderList;
     }
 }

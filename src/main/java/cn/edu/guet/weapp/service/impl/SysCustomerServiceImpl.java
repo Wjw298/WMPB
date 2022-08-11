@@ -35,4 +35,10 @@ public class SysCustomerServiceImpl implements SysCustomerService {
         int flag = sysCustomerMapper.customerInsert(sysCustomer);
         return flag;
     }
+
+    @Override
+    public int customerUpdateState(String openId,int state) {
+        int flag = sysCustomerMapper.customerUpdateState(openId,state);
+        return flag;
+    }
 }

@@ -13,9 +13,7 @@ public class SysCustomer {
     private String name;
     private String image;
     private String salt;
-
-    public SysCustomer() {
-    }
+    private int state;
 
     public String getId() {
         return id;
@@ -57,17 +55,25 @@ public class SysCustomer {
         this.salt = salt;
     }
 
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SysCustomer customer = (SysCustomer) o;
-        return Objects.equals(id, customer.id) && Objects.equals(openId, customer.openId) && Objects.equals(name, customer.name) && Objects.equals(image, customer.image) && Objects.equals(salt, customer.salt);
+        return state == customer.state && Objects.equals(id, customer.id) && Objects.equals(openId, customer.openId) && Objects.equals(name, customer.name) && Objects.equals(image, customer.image) && Objects.equals(salt, customer.salt);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, openId, name, image, salt);
+        return Objects.hash(id, openId, name, image, salt, state);
     }
 
     @Override
@@ -78,6 +84,7 @@ public class SysCustomer {
                 ", name='" + name + '\'' +
                 ", image='" + image + '\'' +
                 ", salt='" + salt + '\'' +
+                ", state=" + state +
                 '}';
     }
 }

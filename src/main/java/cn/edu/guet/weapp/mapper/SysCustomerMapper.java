@@ -12,4 +12,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface SysCustomerMapper {
     SysCustomer CustomerSelectByOpenId(String openId);
     int customerInsert(SysCustomer customer);
+    int customerUpdateState(String openId,int state);
 }

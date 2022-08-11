@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.edu.guet.weapp.mapper.SysOrderMapper">
-    <select id="finaOrder" resultType="cn.edu.guet.weapp.bean.SysOrder">
+    <select id="finaOrder" resultType="cn.edu.guet.weapp.bean.SysOrder" >
         select *
-        from sys_order;
+        from sys_order WHERE order_openId = #{openId}
     </select>
 </mapper>

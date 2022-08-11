@@ -27,7 +27,6 @@ public class AddressController {
     public List<SysAddress> findAllAddress(String code) throws IOException {
         String openId = GetOpenId.getOpenId(code);//拿到openId
         List<SysAddress> sysAddressList = sysAddressService.findAllAddress(openId);
-
         return sysAddressList;
     }
 }

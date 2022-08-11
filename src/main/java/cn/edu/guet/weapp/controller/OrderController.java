@@ -2,11 +2,13 @@ package cn.edu.guet.weapp.controller;
 
 import cn.edu.guet.weapp.bean.SysOrder;
 import cn.edu.guet.weapp.service.SysOrderService;
+import cn.edu.guet.weapp.util.GetOpenId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -21,10 +23,13 @@ public class OrderController {
     private SysOrderService sysOrderService;
 
     @GetMapping ("findOrder")//查找order列表
-    public List<SysOrder> findOrder (){
-        List<SysOrder> sysOrderList = sysOrderService.findOrder();
+    public List<SysOrder> findOrder (String code) throws IOException {
+        String openId = GetOpenId.getOpenId(code);
+        List<SysOrder> sysOrderList = sysOrderService.findOrder(openId);
         return add(sysOrderList);
     }
+
+
     public List<SysOrder> add (List<SysOrder> sysOrderList){
         for(SysOrder order :sysOrderList){
             switch(order.getPay_type()){

@@ -1,5 +1,6 @@
 package cn.edu.guet.weapp.http;
 
+import cn.edu.guet.weapp.bean.SysCustomer;
 import org.apache.http.HttpStatus;
 
 /**
@@ -13,8 +14,7 @@ public class HttpResult {
     private int code = 200;
     private String msg;
     private Object data;
-    private String username;
-    private String image;
+    private SysCustomer customer;
 
     public static HttpResult error() {
         return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "未知异常，请联系管理员");
@@ -36,10 +36,9 @@ public class HttpResult {
         return r;
     }
 
-    public static HttpResult ok(String username,String image,String msg) {
+    public static HttpResult ok(SysCustomer customer, String msg) {
         HttpResult r = new HttpResult();
-        r.setUsername(username);
-        r.setImage(image);
+        r.setCustomer(customer);
         r.setMsg(msg);
         return r;
     }
@@ -78,19 +77,11 @@ public class HttpResult {
         this.data = data;
     }
 
-    public String getUsername() {
-        return username;
+    public SysCustomer getCustomer() {
+        return customer;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
+    public void setCustomer(SysCustomer customer) {
+        this.customer = customer;
     }
 }
