@@ -13,4 +13,8 @@ import java.util.List;
 @Mapper
 public interface SysAddressMapper {
     List<SysAddress> findAllAddress(String openId);
+    int insertAddress(SysAddress sysAddress);
+    int updateAddress(SysAddress sysAddress);
+    int deleteAddress(SysAddress sysAddress);
+
 }

@@ -2,6 +2,7 @@ package cn.edu.guet.weapp.service;
 
 import cn.edu.guet.weapp.bean.SysAddress;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -11,4 +12,7 @@ import java.util.List;
  */
 public interface SysAddressService {
     List<SysAddress> findAllAddress(String openId);
+    int insertAddress(SysAddress sysAddress) throws IOException;
+    int updateAddress(SysAddress sysAddress) throws IOException;
+    int deleteAddress(SysAddress sysAddress) throws IOException;
 }

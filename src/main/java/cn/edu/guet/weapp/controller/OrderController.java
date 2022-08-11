@@ -29,7 +29,6 @@ public class OrderController {
         return add(sysOrderList);
     }
 
-
     public List<SysOrder> add (List<SysOrder> sysOrderList){
         for(SysOrder order :sysOrderList){
             switch(order.getPay_type()){

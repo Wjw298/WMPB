@@ -4,9 +4,7 @@ import cn.edu.guet.weapp.bean.SysAddress;
 import cn.edu.guet.weapp.service.SysAddressService;
 import cn.edu.guet.weapp.util.GetOpenId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,5 +26,36 @@ public class AddressController {
         String openId = GetOpenId.getOpenId(code);//拿到openId
         List<SysAddress> sysAddressList = sysAddressService.findAllAddress(openId);
         return sysAddressList;
+    }
+    @PostMapping("insertAddress")
+    public int insertAddress(@RequestBody SysAddress sysAddress){
+        int flag= 0;
+        try {
+            flag = sysAddressService.insertAddress(sysAddress);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+    @PostMapping("updateAddress")
+    public int updateAddress(@RequestBody SysAddress sysAddress){
+
+        int flag= 0;
+        try {
+            flag = sysAddressService.updateAddress(sysAddress);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+    @PostMapping("deleteAddress")
+    public int deleteAddress(@RequestBody SysAddress sysAddress){
+        int flag = 0;
+        try {
+            flag = sysAddressService.deleteAddress(sysAddress);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return flag;
     }
 }

@@ -10,11 +10,14 @@ import java.util.Objects;
 public class SysOrder {
     private String order_id;
     private String username;
+    private String order_openId;
     private double total_amount;
     private double pay_amount;
     private String create_time;
     private int pay_type;
     private int status;
+    private String Order_details;//订单详情
+    private String order_appraise;//评价
     //非数据库字段
     private String pay_typeS;
     //非数据库字段
@@ -34,6 +37,14 @@ public class SysOrder {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getOrder_openId() {
+        return order_openId;
+    }
+
+    public void setOrder_openId(String order_openId) {
+        this.order_openId = order_openId;
     }
 
     public double getTotal_amount() {
@@ -76,6 +87,22 @@ public class SysOrder {
         this.status = status;
     }
 
+    public String getOrder_details() {
+        return Order_details;
+    }
+
+    public void setOrder_details(String order_details) {
+        Order_details = order_details;
+    }
+
+    public String getOrder_appraise() {
+        return order_appraise;
+    }
+
+    public void setOrder_appraise(String order_appraise) {
+        this.order_appraise = order_appraise;
+    }
+
     public String getPay_typeS() {
         return pay_typeS;
     }
@@ -97,12 +124,12 @@ public class SysOrder {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SysOrder sysOrder = (SysOrder) o;
-        return Double.compare(sysOrder.total_amount, total_amount) == 0 && Double.compare(sysOrder.pay_amount, pay_amount) == 0 && pay_type == sysOrder.pay_type && status == sysOrder.status && Objects.equals(order_id, sysOrder.order_id) && Objects.equals(username, sysOrder.username) && Objects.equals(create_time, sysOrder.create_time) && Objects.equals(pay_typeS, sysOrder.pay_typeS) && Objects.equals(statusS, sysOrder.statusS);
+        return Double.compare(sysOrder.total_amount, total_amount) == 0 && Double.compare(sysOrder.pay_amount, pay_amount) == 0 && pay_type == sysOrder.pay_type && status == sysOrder.status && Objects.equals(order_id, sysOrder.order_id) && Objects.equals(username, sysOrder.username) && Objects.equals(order_openId, sysOrder.order_openId) && Objects.equals(create_time, sysOrder.create_time) && Objects.equals(Order_details, sysOrder.Order_details) && Objects.equals(order_appraise, sysOrder.order_appraise) && Objects.equals(pay_typeS, sysOrder.pay_typeS) && Objects.equals(statusS, sysOrder.statusS);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(order_id, username, total_amount, pay_amount, create_time, pay_type, status, pay_typeS, statusS);
+        return Objects.hash(order_id, username, order_openId, total_amount, pay_amount, create_time, pay_type, status, Order_details, order_appraise, pay_typeS, statusS);
     }
 
     @Override
@@ -110,11 +137,14 @@ public class SysOrder {
         return "SysOrder{" +
                 "order_id='" + order_id + '\'' +
                 ", username='" + username + '\'' +
+                ", order_openId='" + order_openId + '\'' +
                 ", total_amount=" + total_amount +
                 ", pay_amount=" + pay_amount +
                 ", create_time='" + create_time + '\'' +
                 ", pay_type=" + pay_type +
                 ", status=" + status +
+                ", Order_details='" + Order_details + '\'' +
+                ", order_appraise='" + order_appraise + '\'' +
                 ", pay_typeS='" + pay_typeS + '\'' +
                 ", statusS='" + statusS + '\'' +
                 '}';

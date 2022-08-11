@@ -51,7 +51,6 @@ public class AuthHandlerInterceptor implements HandlerInterceptor {
         //log.info("==============token:" + token);
         Map<String, String> map = tokenUtil.parseToken(token);
         String openId = map.get("openId");
-        System.out.println("token open openId: "+openId);
         long timeOfUse = System.currentTimeMillis() - Long.parseLong(map.get("timeStamp"));
 
         //1.判断 token 是否过期

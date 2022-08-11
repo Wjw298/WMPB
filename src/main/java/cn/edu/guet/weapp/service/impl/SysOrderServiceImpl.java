@@ -20,6 +20,9 @@ public class SysOrderServiceImpl implements SysOrderService {
     @Override
     public List<SysOrder> findOrder(String openId) {
         List<SysOrder> sysOrderList = sysOrderMapper.finaOrder(openId);
+        for(SysOrder order:sysOrderList){
+            order.setOrder_openId("");
+        }
         return sysOrderList;
     }
 }
