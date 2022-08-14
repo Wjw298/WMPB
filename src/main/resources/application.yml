@@ -11,8 +11,3 @@ server:
 mybatis:
   mapper-locations: mapper/*Mapper.xml
   type-aliases-package: cn.edu.guet.weapp.bean
-
-token:
-  privateKey: '永远选择去中正确的事，不是没做会不会后悔，是做了不后悔就可以了'
-  yangToken: 100000
-  oldToken: 300000

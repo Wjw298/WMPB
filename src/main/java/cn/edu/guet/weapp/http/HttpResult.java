@@ -1,8 +1,5 @@
 package cn.edu.guet.weapp.http;
 
-import cn.edu.guet.weapp.bean.SysCustomer;
-import org.apache.http.HttpStatus;
-
 /**
  * HTTP结果封装
  *
@@ -14,7 +11,6 @@ public class HttpResult {
     private int code = 200;
     private String msg;
     private Object data;
-    private SysCustomer customer;
 
     public static HttpResult error() {
         return error(HttpStatus.SC_INTERNAL_SERVER_ERROR, "未知异常，请联系管理员");
@@ -30,15 +26,9 @@ public class HttpResult {
         r.setMsg(msg);
         return r;
     }
+
     public static HttpResult ok(String msg) {
         HttpResult r = new HttpResult();
-        r.setMsg(msg);
-        return r;
-    }
-
-    public static HttpResult ok(SysCustomer customer, String msg) {
-        HttpResult r = new HttpResult();
-        r.setCustomer(customer);
         r.setMsg(msg);
         return r;
     }
@@ -77,11 +67,4 @@ public class HttpResult {
         this.data = data;
     }
 
-    public SysCustomer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(SysCustomer customer) {
-        this.customer = customer;
-    }
 }

@@ -1,69 +1,55 @@
 package cn.edu.guet.weapp.controller;
 
-import cn.edu.guet.weapp.bean.SysCustomer;
+import cn.edu.guet.weapp.bean.LoginBean;
+import cn.edu.guet.weapp.bean.SysUser;
 import cn.edu.guet.weapp.http.HttpResult;
-import cn.edu.guet.weapp.service.SysCustomerService;
-import cn.edu.guet.weapp.util.GetOpenId;
-import cn.edu.guet.weapp.util.GetUser;
-import cn.edu.guet.weapp.util.TokenUtil;
+import cn.edu.guet.weapp.security.JwtAuthenticationToken;
+import cn.edu.guet.weapp.service.SysUserService;
+import cn.edu.guet.weapp.util.PasswordUtils;
+import cn.edu.guet.weapp.util.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-/**
- * @Auther wjw
- * @Date 2022/8/4 12:22
- * @Version 1.0
- */
 @RestController
 public class LoginController {
 
     @Autowired
-    private TokenUtil tokenUtil;
+    private SysUserService sysUserService;
+
     @Autowired
-    private SysCustomerService sysCustomerService;
+    private AuthenticationManager authenticationManager;
 
-    @PostMapping(value="/login")
-    public HttpResult login(@RequestBody String code ) throws IOException {
-        code = code.substring(code.indexOf(":")+2,code.lastIndexOf('"'));//将code转为可用形式
+    @PostMapping(value = "/login")
+    //public HttpResult login(String username, String password,HttpServletRequest request){
+    public HttpResult login(@RequestBody LoginBean loginBean, HttpServletRequest request){
+        String username = loginBean.getUsername();
+        String password = loginBean.getPassword();
+        System.out.println("request: "+request);
+
+        // 用户信息
+        System.out.println(username);
+        System.out.println(password);
+        SysUser user = sysUserService.findByName(username);
+        // 账号不存在、密码错误
+        if (user == null) {
+            return HttpResult.error("账号不存在");
+        }
+        if (!PasswordUtils.matches(user.getSalt(), password, user.getPassword())) {
+            return HttpResult.error("密码不正确");
+        }
+        // 账号锁定
+        if (user.getStatus() == 0) {
+            return HttpResult.error("账号已被锁定,请联系管理员");
+        }
         // 系统登录认证
-        String openId = GetOpenId.getOpenId(code);//拿到openId
-        String token = tokenUtil.getToken(openId);
-        SysCustomer customer = sysCustomerService.CustomerSelectByOpenId(openId) ;
-        if(customer==null){
-            HttpResult httpResult =HttpResult.ok(token);
-            return httpResult;
-        }
-        customer.setOpenId("");
-        HttpResult httpResult = HttpResult.ok(customer,token);
-        return httpResult;
-
-    }
-
-    @PostMapping("/enroll")
-    public int enroll(@RequestBody String  body) throws IOException {
-        int flag;
-        SysCustomer customer = GetUser.getUser(body);
-        String openId=customer.getOpenId();
-        SysCustomer customer1 = sysCustomerService.CustomerSelectByOpenId(openId) ;
-        if(customer1==null){
-            customer.setState(1);
-            flag = sysCustomerService.customerInset(customer);
-        }else{
-            flag = sysCustomerService.customerUpdateState(openId,1);
-        }
-        return flag;
-    }
-
-    @PostMapping("exit")
-    public int exit(@RequestBody String code) throws IOException {
-        code = code.substring(code.indexOf(":")+2,code.lastIndexOf('"'));//将code转为可用形式
-        String openId = GetOpenId.getOpenId(code);//拿到openId
-        int flag =sysCustomerService.customerUpdateState(openId,0);
-        return flag;
+        JwtAuthenticationToken token = SecurityUtils.login(request, username, password, authenticationManager);
+        System.out.println("HttpResult.ok(token): "+HttpResult.ok(token));
+        return HttpResult.ok(token);
     }
 }
